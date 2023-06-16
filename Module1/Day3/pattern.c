@@ -40,11 +40,9 @@ void pattern2(int n){
 
 int main()
 {
-    int n = 0;
-    printf("Enter the n number for the pattern : ");
-    scanf("%d",&n);
+    int n = 5;
+    // printf("Enter the n number for the pattern : ");
+    // scanf("%d",&n);
     pattern1(n); 
-    pattern2(n);
-    
     return 0;      
 }
