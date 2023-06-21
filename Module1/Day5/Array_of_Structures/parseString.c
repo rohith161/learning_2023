@@ -26,7 +26,7 @@ int main(){
         printf("Enter 1 to continue, 0 Exit : ");
         int in = 0;
         scanf("%d",&in);
-        if(0 == in){
+        if(0 == in || i == size){
             size = i+1;
             break;
         }
@@ -49,5 +49,6 @@ int main(){
     scanf("%s",src);
     // to search the student by name
     searchStudent(students,src,size);
+    free(students);
     return 0;
 }

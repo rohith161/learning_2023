@@ -20,24 +20,17 @@ void displayAllStudent(Student* ptr,int size){
     }
 }
 
+void swapStudents(Student *student1,Student *student2) {
+    Student temp = *student1;
+    *student1 = *student2;
+    *student2 = temp;
+}
+
 void sortDescending(Student *ptr, int size) {
     for (int i = 0; i < size - 1; i++) {
         for (int j = 0; j < size - 1 - i; j++) {
             if (ptr[j].marks < ptr[j + 1].marks) {
-                int roll = ptr[j].rollno;
-                char n[20];
-                strcpy(n, ptr[j].name);
-                float m = ptr[j].marks;
-
-                // Swap current
-                ptr[j].rollno = ptr[j + 1].rollno;
-                strcpy(ptr[j].name, ptr[j + 1].name);
-                ptr[j].marks = ptr[j + 1].marks;
-
-                // Swap next
-                ptr[j + 1].rollno = roll;
-                strcpy(ptr[j + 1].name, n);
-                ptr[j + 1].marks = m;
+                swapStudents(&ptr[j], &ptr[j + 1]);
             }
         }
     }
