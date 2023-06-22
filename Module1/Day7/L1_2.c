@@ -1,48 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-int copyFiles(const char*, const char*);
-FILE* openFile(const char*, const char*);
-void textCaseformat(char*);
+void CopyFile(char** );
 void changeToUpperCase(FILE*, FILE*);
 void changeToLowerCase(FILE*, FILE*);
 void changeToSentenceCase(FILE*, FILE*);
 void normalCopyFile(FILE*, FILE*);
 
-int main() {
-    char srcName[150], destName[150];
-    int flag = copyFiles(srcName, destName);
-    printf("%s", (flag == 0) ? "File Copy Operation Completed...\n" : "");
-    return 0;
+int main(int arg,char* argv[]){
+    (void)arg;
+    CopyFile(argv);
 }
 
-int copyFiles(const char* srcName, const char* destName) {
-    FILE* srcFile, * destFile;
-    printf("Enter the Source File name/path with Extension: ");
-    scanf("%s", srcName);
-    srcFile = openFile(srcName, "r");
-
-    printf("Enter the Destination File name/path with Extension: ");
-    scanf("%s", destName);
-    destFile = openFile(destName, "rw+");
-
-    // If the source or destination file doesn't exist, show an error message
-    if (srcFile == NULL || destFile == NULL) {
-        if (srcFile == NULL) {
-            printf("File \"%s\" not found/Unable to open the file...\n", srcName);
-        }
-        if (destFile == NULL) {
-            printf("File \"%s\" not found/Unable to open the file...\n", destName);
-        }
-
-        printf("File Copy Operation Terminated...\n");
-        return 1;
+void CopyFile(char** argv){
+    int flag = 1;
+    char format[50];
+    strcpy(format,argv[1]);
+    FILE* srcFile = fopen(argv[2],"r");
+    if(srcFile == NULL){
+        printf("The source File \"%s\" NOT FOUND/Unable to open \n",argv[2]);
+        flag = 0;
     }
-
-    char format[3];
-    textCaseformat(format);
-
+    FILE* destFile = fopen(argv[3],"w");
+    if(destFile == NULL){
+        printf("The source File \"%s\" NOT FOUND/Unable to open \n",argv[3]);
+         flag = 0;
+    }
     // Text case formatted if-else cases
     if (strcmp(format, "-u") == 0) {
         changeToUpperCase(srcFile, destFile);
@@ -59,24 +44,7 @@ int copyFiles(const char* srcName, const char* destName) {
 
     fclose(srcFile);
     fclose(destFile);
-    return 0;
-}
-
-FILE* openFile(const char* name, const char* type) {
-    FILE* temp = fopen(name, type);
-    if(temp == NULL){
-        return NULL;
-    }
-    return temp;
-}
-
-void textCaseformat(char* format) {
-    printf("Please select one of the following options to copy the content in a formatted manner:\n");
-    printf("-u, to change file content to Upper Case\n");
-    printf("-l, to change file content to Lower Case\n");
-    printf("-s, to change file content to Sentence Case\n");
-    printf("For normal Copy operation, press any key and Enter\n:: ");
-    scanf("%s", format);
+    printf("%s",(flag == 1)?"Copy Operation was Successful\n":"Copy Operation was Terminated\n");
 }
 
 // Function for file copy in upper case

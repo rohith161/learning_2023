@@ -12,29 +12,13 @@ typedef struct SensorInfo
     char Time[9];
 } SensorInfo;
 
-void initSensor(SensorInfo*, const char*);
-void displaySensorInfo(SensorInfo*, int);
-int readFile(SensorInfo** ,FILE*,int*);
-
-int main(){
-
-    FILE* Log = fopen("data.csv", "r");
-    int size = 0;
-    SensorInfo* sensor = NULL;
-    readFile(&sensor,Log,&size);
-    displaySensorInfo(sensor, size);
-    free(sensor);
-    fclose(Log);
-    return 0;
-}
-
 // function to initialize the Sensor parameter 
 void initSensor(SensorInfo* ptr, const char* str)
 {
     sscanf(str, "%d,%2s,%f,%d,%d,%8s", &ptr->EntryNo, ptr->SensorNo, &ptr->Temperature, &ptr->Humidity, &ptr->Light, ptr->Time);
 }
 // Function to Diaplay the sendorInfo array of structure
-void displaySensorInfo(SensorInfo* ptr, int size)
+void displayAllSensorInfo(SensorInfo* ptr, int size)
 {
     printf("Sensor Info:\n---------------\n");
     for (int i = 0; i < size; i++) {
@@ -42,7 +26,13 @@ void displaySensorInfo(SensorInfo* ptr, int size)
         printf("---------------\n");
     }
 }
-
+void displaySensorInfo(SensorInfo* ptr)
+{
+    printf("Sensor Info:\n---------------\n");
+    
+        printf("\nEntryNo: %d\nSensorNo: %s\nTemperature: %.1f\nHumidity: %d\nLight: %d\nTime: %s\n", ptr->EntryNo, ptr->SensorNo, ptr->Temperature, ptr->Humidity, ptr->Light, ptr->Time);
+        printf("---------------\n");
+}
 //functiojn to read the the sensor parameters in data.csv
 int readFile(SensorInfo** sensor,FILE* Log,int* size){
     char buffer[1024];
